@@ -48,6 +48,9 @@
                                 <state key="normal" title="START">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="lightChangeButtonWasTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="H8K-To-EQd"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -70,6 +73,7 @@
                     </view>
                     <connections>
                         <outlet property="greenLightView" destination="zci-2B-nu7" id="oGe-xv-42B"/>
+                        <outlet property="lightChangeButton" destination="6uN-rt-wUG" id="cUb-Xz-Jtf"/>
                         <outlet property="redLightView" destination="I3E-MF-97d" id="16l-eF-H9K"/>
                         <outlet property="yellowLightView" destination="lq5-qN-AiW" id="hGy-pm-v2M"/>
                     </connections>
