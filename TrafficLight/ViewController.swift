@@ -7,22 +7,25 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+enum CurrentLight {
+    case red, yellow, green
+}
 
-    let lightOff = 0.3
-    let lightOn = 1.0
-    
+final class ViewController: UIViewController {
+
     @IBOutlet var redLightView: UIView!
     @IBOutlet var yellowLightView: UIView!
     @IBOutlet var greenLightView: UIView!
+   
     @IBOutlet var lightChangeButton: UIButton!
+    
+    private var currentLight = CurrentLight.red
+    private let lightOff = 0.3
+    private let lightOn = 1.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        redLightView.layer.cornerRadius = redLightView.frame.height / 2
-        yellowLightView.layer.cornerRadius = yellowLightView.frame.height / 2
-        greenLightView.layer.cornerRadius = greenLightView.frame.height / 2
         lightChangeButton.layer.cornerRadius = 10
         
         redLightView.alpha = lightOff
@@ -30,19 +33,31 @@ class ViewController: UIViewController {
         greenLightView.alpha = lightOff
         
     }
+    
+    override func viewWillLayoutSubviews() {
+        redLightView.layer.cornerRadius = redLightView.frame.height / 2
+        yellowLightView.layer.cornerRadius = yellowLightView.frame.height / 2
+        greenLightView.layer.cornerRadius = greenLightView.frame.height / 2
+    }
 
     @IBAction func lightChangeButtonWasTapped() {
-        lightChangeButton.setTitle("NEXT", for: .normal)
+        if lightChangeButton.currentTitle == "START" {
+            lightChangeButton.setTitle("NEXT", for: .normal)
+        }
         
-        if redLightView.alpha == yellowLightView.alpha {
-            redLightView.alpha = lightOn
+        switch currentLight {
+        case .red:
             greenLightView.alpha = lightOff
-        } else if redLightView.alpha > lightOff && yellowLightView.alpha == greenLightView.alpha {
-            yellowLightView.alpha = lightOn
+            redLightView.alpha = lightOn
+            currentLight = CurrentLight.yellow
+        case .yellow:
             redLightView.alpha = lightOff
-        } else if yellowLightView.alpha > lightOff && greenLightView.alpha == redLightView.alpha {
-            greenLightView.alpha = lightOn
+            yellowLightView.alpha = lightOn
+            currentLight = CurrentLight.green
+        case .green:
             yellowLightView.alpha = lightOff
+            greenLightView.alpha = lightOn
+            currentLight = CurrentLight.red
         }
     }
 }
